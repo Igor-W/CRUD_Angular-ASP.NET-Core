@@ -1,0 +1,62 @@
+﻿<h1>Lista de modele</h1>
+<input type="button" value="Adauga" class="btn btn-default" (click)="add()" />
+<table *ngIf="tableMode; else create" class="table table-striped">
+    <thead>
+        <tr>
+            <td>Model</td>
+            <td>Producator</td>
+            <td>Pret(&#8364;)</td>
+            <td></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let p of products">
+            <ng-template [ngIf]="product?.id != p.id" [ngIfElse]="edit">
+                <td>{{p?.name}}</td>
+                <td>{{p?.company}}</td>
+                <td>{{p?.price}}</td>
+                <td>
+                    <button class="btn btn-sm btn-primary" (click)="editProduct(p)">Modifica</button>
+                    <button class="btn btn-sm btn-danger" (click)="delete(p)">Sterge</button>
+                </td>
+            </ng-template>
+        </tr>
+    </tbody>
+</table>
+
+<!--template pentru editarea-->
+<ng-template #edit>
+    <td>
+        <input type="text" [(ngModel)]="product.name" class="form-control" />
+    </td>
+    <td>
+        <input type="text" [(ngModel)]="product.company" class="form-control" />
+    </td>
+    <td>
+        <input type="number" [(ngModel)]="product.price" class="form-control" />
+    </td>
+    <td>
+        <input type="button" value="Salveaza" (click)="save()" class="btn btn-sm btn-success" />
+        <input type="button" value="Anulare" (click)="cancel()" class="btn btn-sm btn-warning" />
+    </td>
+</ng-template>
+
+<!--template pentru adaugarea-->
+<ng-template #create>
+    <div class="form-group">
+        <label>Model</label>
+        <input type="text" [(ngModel)]="product.name" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Producator</label>
+        <input type="text" [(ngModel)]="product.company" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Pret</label>
+        <input type="number" [(ngModel)]="product.price" class="form-control" />
+    </div>
+    <div>
+        <input type="button" value="Salveaza" (click)="save()" class="btn btn-success" />
+        <input type="button" value="Anulare" (click)="cancel()" class="btn btn-warning" />
+    </div>
+</ng-template>
